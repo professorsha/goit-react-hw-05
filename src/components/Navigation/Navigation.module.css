@@ -1,0 +1,15 @@
+.container{
+    display: flex;
+    gap:12px;
+    list-style: none;
+    width: 100%;
+    height: 50px;
+    position: fixed;
+    top: 0;
+}
+.link{
+    color:black;
+}
+.active{
+    color: brown;
+}
