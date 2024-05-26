@@ -3,20 +3,33 @@ import MovieList from '../../components/MovieList/MovieList';
 import { getMoviesTrending } from '../../themoviedb-api';
 
 export default function HomePage() {
-  const [movies, setMovies] = useState([]);
+  const [trendMovies, setTrendMovies] = useState([]);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
-    setLoading(true);
-    getMoviesTrending()
-      .then(data => setMovies(data))
-      .finally(() => setLoading(false));
+    async function getTrendMovies() {
+      setLoading(true);
+      try {
+        const data = await getMoviesTrending();
+        setTrendMovies(data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    getTrendMovies();
   }, []);
   // console.log(movies.results);
   return (
     <div>
-      <h2>Home Page</h2>
+      <h2>Trending Today</h2>
       {loading && <b>Loading list trending movies...</b>}
-      {movies.length > 0 && <MovieList movies={movies}/> }
+      <MovieList movies={trendMovies}/> 
     </div>
   );
 }
+
+    
+
+  
