@@ -1,8 +1,8 @@
-import { useSearchParams, useLocation, Link } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { getMovieSearch } from "../../themoviedb-api";
 import SearchBar from "../../components/SearchBar/SearchBar";
-// import Loader from "../../components/Loader/Loader";
+import MovieList from "../../components/MovieList/MovieList";
 import toast from "react-hot-toast";
 import css from "./MoviesPage.module.css";
 
@@ -20,7 +20,7 @@ const notify = (msg) =>
   });
 
 export default function MoviesPage() {
-  const location = useLocation();
+  // const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
   const movieName = searchParams.get("movieName") ?? "";
   const [moviesList, setMoviesList] = useState([]);
@@ -62,7 +62,7 @@ export default function MoviesPage() {
     setSearchParams({ movieName: searchForm.elements.movieName.value });
     searchForm.reset();
   };
-
+console.log(moviesList);
   return (
     <main className="container">
       <div className={css.moviesPage}>
@@ -71,7 +71,8 @@ export default function MoviesPage() {
           <p>There is no movies with this request. Please, try again</p>
         )}
         <ul className={css.movieList}>
-          {moviesList.map((movie) => {
+          <MovieList movies={moviesList}/>
+          {/* {moviesList.map((movie) => {
             return (
               <li key={movie.id}>
                 <Link
@@ -83,7 +84,7 @@ export default function MoviesPage() {
                 </Link>
               </li>
             );
-          })}
+          })} */}
           {loading && <div>LOADING movies PAGE...</div>}
         </ul>
       </div>
